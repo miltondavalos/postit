@@ -1,0 +1,65 @@
+Name all the 7 (or 8) routes exposed by the resources keyword in the routes.rb file. Also name the 4 named routes,
+and how the request is routed to the controller/action.
+ 7 routes:
+  index, new, create, edit, update, show, destroy
+ 4 named routes:
+  Action	Name route		Controller/Action	Path
+  index 	posts_path		posts#index		'/posts'
+  new   	new_post_path		posts#new		'/posts/new'
+  edit  	edit_post_path(:id)	posts#edit		'/posts/:id/edit'
+  show  	post_path(:id)		posts#show		'/posts/:id'
+
+What is REST and how does it relate to the resources routes?
+Representational State Transfer Procotol. Using Model View Controller design patterns maps routes to http requests
+
+What's the major difference between model backed and non-model backed form helpers?
+Model backed form when you want to use fields from the database or active record to utilize Rails conventions. When using
+model backed forms you need to provide an object then fields and virtual attributes will be available. non-model backed forms are
+more flexible in the sense that you could provide any values you want. It is probably good for authentication
+
+How does form_for know how to build the <form> element?
+Based on the object that is passed.
+
+What's the general pattern we use in the actions that handle submission of model-backed forms (ie, the create and update actions)?
+def create
+  @post = Post.new(post_params)
+
+  if @post.save
+    flash[:notice] = 'save successfully'
+    redirect_to posts_path
+  else
+    render :new
+  end
+end
+
+def update
+  @post = Post.find(params[:id])
+
+  if @post.update(post_params)
+    flash[:notice] = 'updated successfully'
+    redirect_to post_path(@post)
+  else
+    render :edit
+  end
+end
+
+private
+def post_params
+  #implement
+end
+
+How exactly do Rails validations get triggered? Where are the errors saved? How do we show the validation messages on the user interface?
+Validations are added at the model layer
+They are save in the object itself and can be retrieve by dereferencing .errors method. Then you can use full_messages and each to
+iterate through the errors.
+
+What are Rails helpers?
+Helpers are methods that are extracted to keep your code DRY. You can use them in the application_helper.rb
+
+What are Rails partials?
+Partials is a way to avoid duplication on the templates by extracting common html. You prefix them with underscore(_)
+
+When do we use partials vs helpers?
+partials are used for your views to extract common html. helpers probably more to extract logic into reusable methods.
+When do we use non-model backed forms?
+When we need to diviate from the use of the database objects and their fields and virtual attributes.
