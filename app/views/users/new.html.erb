@@ -1,3 +1,4 @@
+<%= render 'shared/content_title', title: 'Register' %>
 <%= form_for @user do |f| %>
     <div class='group-control'>
       <%= f.label 'Name' %>
@@ -5,5 +6,5 @@
       <%= f.label 'Password' %>
       <%= f.text_field :password %>
     </div>
-    <%= f.submit 'Create user', class: 'btn btn-primary' %>
+    <%= f.submit 'Register', class: 'btn btn-primary' %>
 <% end %>
