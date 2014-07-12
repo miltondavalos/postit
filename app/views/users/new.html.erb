@@ -1,0 +1,9 @@
+<%= form_for @user do |f| %>
+    <div class='group-control'>
+      <%= f.label 'Name' %>
+      <%= f.text_field :username %>
+      <%= f.label 'Password' %>
+      <%= f.text_field :password %>
+    </div>
+    <%= f.submit 'Create user', class: 'btn btn-primary' %>
+<% end %>
