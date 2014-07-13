@@ -1,13 +1,2 @@
 <%= render 'shared/content_title', title: 'Register' %>
-<div class='well'>
-  <%= form_for @user do |f| %>
-      <%= render 'posts/error', instance: @user %>
-      <div class='group-control'>
-        <%= f.label 'Name' %>
-        <%= f.text_field :username %>
-        <%= f.label 'Password' %>
-        <%= f.text_field :password %>
-      </div>
-      <%= f.submit 'Register', class: 'btn btn-primary' %>
-  <% end %>
-</div>
+<%= render 'form' %>
