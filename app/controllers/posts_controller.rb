@@ -1,10 +1,10 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :vote]
   before_action :require_user, except: [:index, :show]
-  before_action :require_same_user, only: [:vote]
+  #before_action :require_same_user, only: [:vote]
 
   def index
-    @posts = Post.all
+    @posts = Post.all.sort_by{|votes| votes.total_votes}.reverse
   end
 
   def show
@@ -47,7 +47,7 @@ class PostsController < ApplicationController
     if @vote.valid?
       flash[:notice] = 'Your vote was counted.'
     else
-      flash[:error] = 'Your vote was not counted.'
+      flash[:error] = 'Your can only vote once for it.'
     end
     redirect_to :back
   end
@@ -62,11 +62,11 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
-  def require_same_user
-    if not current_user == @post.creator
-      flash[:error] = 'You cannot do that.'
-      redirect_to root_path
-    end
-  end
+  #def require_same_user
+  #  if not current_user == @post.creator
+  #    flash[:error] = 'You cannot do that.'
+  #    redirect_to root_path
+  #  end
+  #end
 
 end
