@@ -5,8 +5,9 @@
         <%= f.label 'Name' %>
         <%= f.text_field :username %>
         <%= f.label 'Password' %>
-        <%= f.text_field :password %>
+        <%= f.text_field :password, type: :password %>
       </div>
       <%= f.submit @user.new_record? ? 'Register' : 'Update Profile', class: 'btn btn-success btn-primary' %>
   <% end %>
 </div>
+
