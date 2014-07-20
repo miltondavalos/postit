@@ -1,0 +1,43 @@
+Quiz: Lesson 3
+
+What's the difference between rendering and redirecting? What's the impact with regards to instance variables, view templates?
+  Rendering will render a template and you can still have access to instance variables
+  Redirectng will issue a new http request and you do have access to instance variables
+
+If I need to display a message on the view template, and I'm redirecting, what's the easiest way to accomplish this?
+  You can use the flash method
+
+If I need to display a message on the view template, and I'm rendering, what's the easiest way to accomplish this?
+  flash.now
+
+Explain how we should save passwords to the database.
+  Passwords should be save using has_secure_password and password_digest
+
+What should we do if we have a method that is used in both controllers and views?
+  To keep our code DRY we should create a helper method in the application controller
+
+What is memoization? How is it a performance optimization?
+  It is represented by ||= it means that if the object exists use the current value else assign a new value
+
+If we want to prevent unauthenticated users from creating a new comment on a post, what should we do?
+  You should validate the presence of a authenticated user first. We could also lock the functionality if the user has not logged in.
+
+Suppose we have the following table for tracking "likes" in our application. How can we make this table polymorphic?
+Note that the "user_id" foreign key is tracking who created the like.
+
+id	user_id	photo_id	video_id	post_id
+1	4		12
+2	7			3
+3	2	6
+
+  Create a new model like
+  You could add a likeable_id and a likeable_type columns to the likes table
+  Add belongs_to :likeable, polymorphic: true
+  In photo, video and post models add has_many :likes, as: :likeable
+
+How do we set up polymorphic associations at the model layer? Give example for the polymorphic model (eg, Vote) as well as an example parent model (the model on the 1 side, eg, Post).
+  At the vote model layer add belongs_to :voteable, polymorphic: true
+  At the parent model has_many :votes, as: :voteable
+
+What is an ERD diagram, and why do we need it?
+  It is the Entity Relationship Diagram and describes the relationship between the models.
