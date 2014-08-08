@@ -10,6 +10,7 @@ class CommentsController < ApplicationController
       flash[:notice] = 'Your comment was added successfully!'
       redirect_to post_path(@post)
     else
+      #flash.now[:error] = "Body can't be blank" if params[:body].nil?
       render 'posts/show'
     end
   end
