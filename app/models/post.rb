@@ -1,5 +1,7 @@
 class Post < ActiveRecord::Base
   include Voteable
+  include Sluggable
+
   #belongs_to :user
   belongs_to :creator, foreign_key: 'user_id', class_name: 'User'
   has_many :comments
@@ -11,52 +13,39 @@ class Post < ActiveRecord::Base
   validates :url, presence: true, uniqueness: true
   validates :description, presence: true
 
-  before_save :generate_slug!
+  sluggable_column :title
 
-  #def total_votes
-  #  up_votes - down_votes
+  #before_save :generate_slug!
+  #
+  #def generate_slug!
+  #  the_slug = to_slug(self.title)
+  #  post = Post.find_by slug: the_slug
+  #  count = 2
+  #  while post && post != self
+  #    the_slug = append_suffix(the_slug, count)
+  #    post = Post.find_by slug: the_slug
+  #    count += 1
+  #  end
+  #  self.slug = the_slug.downcase
   #end
   #
-  #def up_votes
-  #  self.votes.where(vote: true).size
+  #def append_suffix(str, count)
+  #  if str.split('-').last.to_i != 0
+  #    str.split('-').slice(0...-1).join('-') + '-' + count.to_s
+  #  else
+  #    str + '-' + count.to_s
+  #  end
   #end
   #
-  #def down_votes
-  #  self.votes.where(vote: false).size
+  #def to_slug(name)
+  #  str = name.strip
+  #  str.gsub! /\s*[^A-Za-z0-9]\s*/, '-'
+  #  str.gsub! /-+/, '-'
+  #  str.downcase
   #end
-
-  #def generate_slug
-  #  self.slug = self.title.gsub(' ','-').downcase
+  #
+  #def to_param
+  #  self.slug
   #end
-  def generate_slug!
-    the_slug = to_slug(self.title)
-    post = Post.find_by slug: the_slug
-    count = 2
-    while post && post != self
-      the_slug = append_suffix(the_slug, count)
-      post = Post.find_by slug: the_slug
-      count += 1
-    end
-    self.slug = the_slug.downcase
-  end
-
-  def append_suffix(str, count)
-    if str.split('-').last.to_i != 0
-      str.split('-').slice(0...-1).join('-') + '-' + count.to_s
-    else
-      str + '-' + count.to_s
-    end
-  end
-
-  def to_slug(name)
-    str = name.strip
-    str.gsub! /\s*[^A-Za-z0-9]\s*/, '-'
-    str.gsub! /-+/, '-'
-    str.downcase
-  end
-
-  def to_param
-    self.slug
-  end
 end
 
